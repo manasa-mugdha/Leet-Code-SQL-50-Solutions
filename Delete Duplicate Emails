@@ -1,0 +1,8 @@
+DELETE p.*
+FROM Person AS P,
+(
+    SELECT Email, min(Id) AS minId FROM Person
+    GROUP BY Email having count(*) > 1
+)
+AS q
+WHERE p.Email = q.Email AND Id > q.minId
